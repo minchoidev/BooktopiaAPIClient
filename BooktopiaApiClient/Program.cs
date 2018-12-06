@@ -23,9 +23,16 @@ namespace BooktopiaApiClient
         // Main controller
         static async Task ServiceBooktopia_RunAsync()
         {
-            client.BaseAddress = new Uri(@"https://localhost:44346/");
+            // Note: Uri only recognize the base domain. If it has "domain/additionalPart", then it ignores the part after '/'
+            // client.BaseAddress = new Uri(@"http://booktopiaapiservice-dev.us-east-1.elasticbeanstalk.com");  // Elastic Bean Stalk
+            //client.BaseAddress = new Uri(@"https://mchoi34-eval-test.apigee.net");                              // Apigee Proxy
+            client.BaseAddress = new Uri(@"https://localhost:44346");                              // Local
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            // API key to verify
+            client.DefaultRequestHeaders.Add("booktopia-apikey", "V7awRZcors3ONC1GkYxU2qYyTiYdAbg1");
+            // client.DefaultRequestHeaders.Add("Accept-Language", "en-GB,en-US;q=0.8,en;q=0.6,ru;q=0.4");
 
             // as long as 'isRunning' is true, the application continues
             bool isRunning = true;
@@ -564,7 +571,7 @@ namespace BooktopiaApiClient
             // display result
             if (response.StatusCode == System.Net.HttpStatusCode.Created)
             {
-                Console.WriteLine($"The title {title.TitleId} has been added.");
+                Console.WriteLine($"The title has been added.");
             }
             else
             {
